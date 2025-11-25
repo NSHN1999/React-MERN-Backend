@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const { dbConnection } = require('./database/config');
 const cors = require('cors');
@@ -22,7 +23,9 @@ app.use(express.json())
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/events', require('./routes/events'));
 
-//TODO: CRUD: Eventos
+app.use(`/{*splat}`, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 //Iniciar servidor
 app.listen(process.env.PORT, () => {
